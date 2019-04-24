@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block body %}
+<div>
+    <h2>Authors</h2>
+
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Books
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+     {% for author in authors %}
+    <tr>
+        <td>
+            {{ author.first_name }}
+        </td>
+        <td>
+            {{ author.last_name }}
+        </td>
+        <td>
+            {{ author.type }}
+        </td>
+         <td>
+        {{ author.num_books}}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+    {% url 'add_author' as the_url %}
+    <a href="{{ the_url }}">Add Author</a>
+
+    </div>
+{% endblock %}

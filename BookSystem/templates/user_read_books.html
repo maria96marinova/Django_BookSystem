@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h2>Your Books</h2>
+
+     <div class="row">
+
+    {% for book in books %}
+
+        <div class="col-sm-4">
+            <div class="card" style="width: 16rem; height: 26rem; margin:20px;">
+
+                <div class="card-body" style="background-color: orange">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">Category: {{ book.category.name }}</p>
+                    <p class="card-text">{{ book.description }}</p>
+                    <p class="card-text">{{ book.date }}</p>
+                      <p class="card-text">{{ book.publisher.name }}</p>
+                     <p class="card-text">
+
+                        <a href="{% url 'book_authors' book.id%}" class="btn btn-secondary btn-sm">Authors</a>
+                     </p>
+
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h2>Edit Book</h2>
+
+    <form action="/book/edit/{{book.id}}/" method="post" style="margin-left: 10px">
+
+     {% csrf_token %}
+
+    <label>Title</label>
+    <input name="title" value="{{ book.title }}" class="form-control col-md-4"/>
+
+    <label>Description</label>
+        <textarea name="description" class="form-control col-md-4" rows="10" cols="20">{{ book.description }}</textarea>
+
+    <label>Publication Date</label>
+    <input type="date" name="publication_date" value="{{ book.publication_date }}"/>
+
+    <label>Category</label>
+    <select name="categoryId">
+        {% for category in categories %}
+            <option {% if category.id ==  book.category.id%} selected {% endif %} value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Authors</label>
+    <select multiple name="authorsIds">
+        {% for author in  authors %}
+        <option value="{{ author.id }}">{{ author.first_name }} {{ author.last_name }}</option>
+        {% endfor %}
+    {% for authorForBook in  authorsForBook %}
+        <option selected value="{{ authorForBook.id }}">{{ authorForBook.first_name }} {{ authorForBook.last_name }}</option>
+    {% endfor %}
+    </select>
+
+    <label>Publishers</label>
+    <select name="publisherId">
+        {% for publisher in publishers %}
+            <option {% if publisher.id ==  book.publisher.id%} selected {% endif %} value="{{ publisher.id }}">{{ publisher.name }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="submit" value="Edit" class="btn btn-success"/>
+
+    </form>
+
+{% endblock %}

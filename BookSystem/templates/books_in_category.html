@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block body %}
+<div>
+    <h2>Books</h2>
+
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Publication Date
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            See Authors
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+     {% for book in books %}
+    <tr>
+        <td>
+            {{ book.title }}
+        </td>
+        <td>
+            {{ book.description }}
+        </td>
+        <td>
+            {{ book.date }}
+        </td>
+        <td>
+            {{ book.publisher }}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+    {% url 'add_book' as the_url %}
+    <a href="{{ the_url }}">Add Book</a>
+
+    </div>
+{% endblock %}

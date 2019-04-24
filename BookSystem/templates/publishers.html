@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div>
+    <h2>Publishers</h2>
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Country
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+      {% for publisher in publishers %}
+    <tr>
+        <td>
+            {{ publisher.name }}
+        </td>
+        <td>
+           {{ publisher.country }}
+        </td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+
+    {% url 'add_publisher' as the_url %}
+    <a href="{{ the_url }}">Add Publisher</a>
+</div>
+
+{% endblock %}
+
+

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block body %}
+
+        {% if successApproved %}
+
+        <div class="alert alert-success">{{ successApproved }}</div>
+
+    {% endif %}
+
+    {% if errorApproved %}
+
+        <div class="alert alert-success">{{ errorApproved }}</div>
+
+    {% endif %}
+
+<div>
+    <h2>Books for Approval</h2>
+
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Publication Date
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+     {% for book in books %}
+    <tr>
+        <td>
+            {{ book.title }}
+        </td>
+        <td>
+            {{ book.description }}
+        </td>
+        <td>
+            {{ book.date }}
+        </td>
+        <td>
+            {{ book.category }}
+        </td>
+        <td>
+            {{ book.publisher }}
+        </td>
+    <td>
+         <form method="post" action="/book/approve/">
+             {% csrf_token %}
+             <input name="book_id" value="{{ book.id }}" hidden/>
+             <input type="submit" class="btn btn-secondary" value="Approve"/>
+         </form>
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block body %}
+
+
+    {% if user in adminUsers %}
+
+
+        {% if successEdited %}
+
+        <div class="alert alert-success">{{ successEdited }}</div>
+
+    {% endif %}
+
+    {% if errorEdited %}
+
+        <div class="alert alert-success">{{ errorEdited }}</div>
+
+    {% endif %}
+<div>
+    <h2>Books</h2>
+
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Publication Date
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Publisher
+        </th>
+
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+     {% for book in books %}
+    <tr>
+        <td>
+            {{ book.title }}
+        </td>
+        <td>
+            {{ book.description }}
+        </td>
+        <td>
+            {{ book.date }}
+        </td>
+        <td>
+            {{ book.category }}
+        </td>
+        <td>
+            {{ book.publisher }}
+        </td>
+
+    <td>
+         <a href="{% url 'edit_book' book.id %}">Edit</a>
+    </td>
+    <td>
+         <form method="post" action="/book/delete/">
+             {% csrf_token %}
+             <input name="book_id" value="{{ book.id }}" hidden/>
+             <input type="submit" class="btn btn-secondary" value="Delete"/>
+         </form>
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+    {% url 'add_book' as the_url %}
+    <a href="{{ the_url }}">Add Book</a>
+
+    </div>
+
+
+    {% else %}
+    <div class="row">
+
+    {% for book in books %}
+
+        <div class="col-sm-4">
+            <div class="card" style="width: 16rem; height: 26rem; margin:20px;">
+
+                <div class="card-body" style="background-color: orange">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">Category: {{ book.category }}</p>
+                    <p class="card-text">{{ book.description }}</p>
+                    <p class="card-text">{{ book.date }}</p>
+                      <p class="card-text">{{ book.publisher }}</p>
+                     <p class="card-text">
+
+                        <a href="{% url 'book_authors' book.id%}" class="btn btn-secondary btn-sm">Authors</a>
+                     </p>
+                           <form method="post" action="/book/add_read/">
+                                {% csrf_token %}
+                            <input name="book_id" value="{{ book.id }}" hidden/>
+                         <input type="submit" class="btn btn-secondary" value="Add in Read Section"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+        {% endif %}
+
+
+
+
+{% endblock %}

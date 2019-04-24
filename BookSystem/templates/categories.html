@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div>
+    <h2>Categories</h2>
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Number of Books
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+      {% for category in categories %}
+    <tr>
+        <td>
+            {{ category.name }}
+        </td>
+        <td>
+            {{ category.num_books }}
+        </td>
+        <td>
+            <a href="{% url 'books_in_category' category.id %}">See Books</a>
+        </td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+{% if user in adminUsers %}
+    {% url 'add_category' as the_url %}
+    <a href="{{ the_url }}">Add Category</a>
+</div>
+ {% endif %}
+
+{% endblock %}
+
+

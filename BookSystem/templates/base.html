@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: yellow">
+
+
+        <a class="navbar-brand" href="{% url 'home' %}">BS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+              {% if user.is_authenticated%}
+                {% url 'category' as the_category_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_category_url }}">Categories</a>
+                </li>
+            {% endif %}
+
+                {% if user in adminUsers %}
+
+                {% url 'author' as the_author_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_author_url }}">Authors</a>
+                </li>
+
+
+                  {% url 'publisher' as the_publisher_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_publisher_url }}">Publishers</a>
+                </li>
+
+                  {% url 'books_for_approval' as book_for_approval_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ book_for_approval_url }}">Suggested Books</a>
+                </li>
+
+              {% endif %}
+
+              {% if user.is_authenticated  %}
+                 {% url 'book' as the_book_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_book_url }}">Books</a>
+                </li>
+            {% endif %}
+
+            {% if user.is_authenticated and user not in adminUsers %}
+                     {% url 'book_for_user' as the_book_for_user_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_book_for_user_url }}">Your Books</a>
+                </li>
+
+            {% endif %}
+
+                 {% if user.is_authenticated and user not in adminUsers %}
+                     {% url 'suggest_book' as suggest_book_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ suggest_book_url }}">Suggest Books</a>
+                </li>
+
+                {% endif %}
+
+
+              {% if user.is_anonymous %}
+                  {% url 'register' as the_register_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_register_url }}">Register</a>
+                </li>
+             {% endif %}
+
+            {% if user.is_anonymous %}
+                  {% url 'login' as the_login_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_login_url }}">Log In</a>
+                </li>
+            {% endif %}
+
+                {% if user.is_authenticated %}
+                     {% url 'logout' as the_logout_url %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ the_logout_url }}">Log Out</a>
+                </li>
+
+                {% endif %}
+
+
+            </ul>
+
+        </div>
+    </nav>
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

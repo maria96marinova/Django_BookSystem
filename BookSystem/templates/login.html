@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <h2>Log In</h2>
+<form action="/accounts/login/" method="post" style="margin-left:10px">
+    {% csrf_token %}
+    {{ form }}
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+    <input type="submit" class="btn btn-primary" value="Submit" style="margin-top:10px;">
+</form>
+
+{% endblock %}
